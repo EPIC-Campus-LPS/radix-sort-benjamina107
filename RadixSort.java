@@ -3,19 +3,22 @@ import java.util.*;
 import java.io.*;
 
 public class RadixSort {
-
-    private ArrayList<String> list = new ArrayList<String>();
-
-    public RadixSort(File f) {
-
+    /**
+     * Sorts a text file alphabetically and creates a new 'Key' sorted file.
+     *
+     * @param f The text file to be input and sorted.
+     */
+    public static void radixSort(File f) {
+        ArrayList<String> list = new ArrayList<String>();
         File file = f;
 
+        //writing to file
         try {
             Scanner scanner = new Scanner(file);
 
             while (scanner.hasNextLine()) {
                 String i = scanner.nextLine();
-                if (i != "")
+                if (!(i.equals("")))
                     list.add(i);
             }
         }
@@ -23,10 +26,31 @@ public class RadixSort {
             e.printStackTrace();
         }
 
-        System.out.println(list);
+        ArrayList<String> outA = sort(list);
+
+        try {
+            File out = new File((f.getName().substring(0, f.getName().length() - 4)) + "_key.txt");
+            FileWriter fw = new FileWriter(out.getName());
+            //write each item into file in order
+            String write = "";
+            for(String item : outA) {
+                write += item + "\n\n";
+            }
+            fw.write(write);
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public ArrayList<String> sort() {
+    /**
+     * Helper method that does the main sorting for RadixSort.
+     *
+     * @param list The list to be taken from the input and sorted.
+     * @return The sorted version of the list in question.
+     */
+    public static ArrayList<String> sort(ArrayList<String> list) {
         //gets longest string length
         int longestLength = 0;
         for (String s : list) {
@@ -39,7 +63,7 @@ public class RadixSort {
         //for each word length possible / "digit" in letter
         for (int i = longestLength; i >= 0; i--) {
             ArrayList<String> temp = new ArrayList<String>(26);
-            for (int j = 0; j < 26; j++) {
+            for (int j = 0; j < 27; j++) {
                 temp.add(null);
             }
             ArrayList<String> q = new ArrayList<String>();
@@ -159,6 +183,10 @@ public class RadixSort {
                         case "z":
                             temp.add(26, s);
                             break;
+
+                        default:
+                            temp.add(27, s);
+                            break;
                     }
                 } else {
                     //if not the right length to be sorted then add to back
@@ -176,12 +204,13 @@ public class RadixSort {
         }
         return list;
     }
-
     public static void main(String[] args) {
 
-        File file = new File("words.txt");
-        RadixSort radix = new RadixSort(file);
-        System.out.println(radix.sort());
+        File f = new File("words.txt");
+        radixSort(f);
+
+        File f1 = new File("alphabet.txt");
+        radixSort(f1);
 
     }
 }
