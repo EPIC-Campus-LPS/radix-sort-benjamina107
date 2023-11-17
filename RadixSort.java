@@ -51,6 +51,7 @@ public class RadixSort {
      * @return The sorted version of the list in question.
      */
     public static ArrayList<String> sort(ArrayList<String> list) {
+        ArrayList<String> l = list;
         //gets longest string length
         int longestLength = 0;
         for (String s : list) {
@@ -60,157 +61,142 @@ public class RadixSort {
         }
 
 
-        //for each word length possible / "digit" in letter
-        for (int i = longestLength; i >= 0; i--) {
-            ArrayList<String> temp = new ArrayList<String>(26);
-            for (int j = 0; j < 27; j++) {
-                temp.add(null);
-            }
-            ArrayList<String> q = new ArrayList<String>();
-            //for each string in the list
-            for (String s : list) {
-                //if it can be sorted then sort it, if not send it to the back
-                if (s.length() >= i) {
-                    //gets the character to compare
-                    String c = "";
-                    if(i == 0)
-                        c = String.valueOf(s.charAt(0));
-                    else
-                        c = String.valueOf(s.charAt(i-1));
-                    //adds in position to arraylist based on char
-                    switch(c) {
-                        case "A":
-                        case "a":
-                            temp.add(1, s);
-                            break;
-                        case "B":
-                        case "b":
-                            temp.add(2, s);
-                            break;
-                        case "C":
-                        case "c":
-                            temp.add(3, s);
-                            break;
-                        case "D":
-                        case "d":
-                            temp.add(4, s);
-                            break;
-                        case "E":
-                        case "e":
-                            temp.add(5, s);
-                            break;
-                        case "F":
-                        case "f":
-                            temp.add(6, s);
-                            break;
-                        case "G":
-                        case "g":
-                            temp.add(7, s);
-                            break;
-                        case "H":
-                        case "h":
-                            temp.add(8, s);
-                            break;
-                        case "I":
-                        case "i":
-                            temp.add(9, s);
-                            break;
-                        case "J":
-                        case "j":
-                            temp.add(10, s);
-                            break;
-                        case "K":
-                        case "k":
-                            temp.add(11, s);
-                            break;
-                        case "L":
-                        case "l":
-                            temp.add(12, s);
-                            break;
-                        case "M":
-                        case "m":
-                            temp.add(13, s);
-                            break;
-                        case "N":
-                        case "n":
-                            temp.add(14, s);
-                            break;
-                        case "O":
-                        case "o":
-                            temp.add(15, s);
-                            break;
-                        case "P":
-                        case "p":
-                            temp.add(16, s);
-                            break;
-                        case "Q":
-                        case "q":
-                            temp.add(17, s);
-                            break;
-                        case "R":
-                        case "r":
-                            temp.add(18, s);
-                            break;
-                        case "S":
-                        case "s":
-                            temp.add(19, s);
-                            break;
-                        case "T":
-                        case "t":
-                            temp.add(20, s);
-                            break;
-                        case "U":
-                        case "u":
-                            temp.add(21, s);
-                            break;
-                        case "V":
-                        case "v":
-                            temp.add(22, s);
-                            break;
-                        case "W":
-                        case "w":
-                            temp.add(23, s);
-                            break;
-                        case "X":
-                        case "x":
-                            temp.add(24, s);
-                            break;
-                        case "Y":
-                        case "y":
-                            temp.add(25, s);
-                            break;
-                        case "Z":
-                        case "z":
-                            temp.add(26, s);
-                            break;
+        for (int i = longestLength - 1; i >= 0; i--) {
+            ArrayList<String> tooShort = new ArrayList<String>();
+            HashMap<Character, LinkedList<String>> map = new HashMap<Character, LinkedList<String>>();
 
-                        default:
-                            temp.add(27, s);
-                            break;
-                    }
-                } else {
+            for (char j = 'a'; j <= 'z'; j++) {
+                map.put(j, new LinkedList<String>());
+            }
+            ArrayList<String> temp = new ArrayList<String>();
+            for (String word : l) {
+                //if it can be sorted then sort it, if not send it to the back
+                    if (word.length() >= i + 1) {
+                        //gets the character to compare
+                        String c = "";
+                        c = String.valueOf(word.charAt(i));
+                        switch (c) {
+                            case "A":
+                            case "a":
+                                map.get('a').add(word);
+                                break;
+                            case "B":
+                            case "b":
+                                map.get('b').add(word);
+                                break;
+                            case "C":
+                            case "c":
+                                map.get('c').add(word);
+                                break;
+                            case "D":
+                            case "d":
+                                map.get('d').add(word);
+                                break;
+                            case "E":
+                            case "e":
+                                map.get('e').add(word);
+                                break;
+                            case "F":
+                            case "f":
+                                map.get('f').add(word);
+                                break;
+                            case "G":
+                            case "g":
+                                map.get('g').add(word);
+                                break;
+                            case "H":
+                            case "h":
+                                map.get('h').add(word);
+                                break;
+                            case "I":
+                            case "i":
+                                map.get('i').add(word);
+                                break;
+                            case "J":
+                            case "j":
+                                map.get('j').add(word);
+                                break;
+                            case "K":
+                            case "k":
+                                map.get('k').add(word);
+                                break;
+                            case "L":
+                            case "l":
+                                map.get('l').add(word);
+                                break;
+                            case "M":
+                            case "m":
+                                map.get('m').add(word);
+                                break;
+                            case "N":
+                            case "n":
+                                map.get('n').add(word);
+                                break;
+                            case "O":
+                            case "o":
+                                map.get('o').add(word);
+                                break;
+                            case "P":
+                            case "p":
+                                map.get('p').add(word);
+                                break;
+                            case "Q":
+                            case "q":
+                                map.get('q').add(word);
+                                break;
+                            case "R":
+                            case "r":
+                                map.get('r').add(word);
+                                break;
+                            case "S":
+                            case "s":
+                                map.get('s').add(word);
+                                break;
+                            case "T":
+                            case "t":
+                                map.get('t').add(word);
+                                break;
+                            case "U":
+                            case "u":
+                                map.get('u').add(word);
+                                break;
+                            case "V":
+                            case "v":
+                                map.get('v').add(word);
+                                break;
+                            case "W":
+                            case "w":
+                                map.get('w').add(word);
+                                break;
+                            case "X":
+                            case "x":
+                                map.get('x').add(word);
+                                break;
+                            case "Y":
+                            case "y":
+                                map.get('y').add(word);
+                                break;
+                            case "Z":
+                            case "z":
+                                map.get('z').add(word);
+                                break;
+                        }
+                    } else {
                     //if not the right length to be sorted then add to back
-                    q.add(s);
+                    tooShort.add(word);
                 }
             }
-            //adds the currently too-short strings to the back
-            for (int k = 0; k < q.size(); k++) {
-                String gggg = q.get(k);
-                temp.add(gggg);
+
+            for (char j = 'a'; j <= 'z'; j++) {
+
+                temp.addAll(map.get(j));
+
             }
-            temp.removeAll(Collections.singleton(null));
-            //replaces list with temp
-            list = temp;
+
+            temp.addAll(tooShort);
+            l = temp;
+
         }
-        return list;
-    }
-    public static void main(String[] args) {
-
-        File f = new File("words.txt");
-        radixSort(f);
-
-        File f1 = new File("alphabet.txt");
-        radixSort(f1);
-
+        return l;
     }
 }

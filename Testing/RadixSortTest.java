@@ -33,7 +33,7 @@ class RadixSortTest {
     }
 
     @org.junit.jupiter.api.Test
-    void fileIn() {
+    void sort2() {
 
         File alph = new File("alphabetTest.txt");
         RadixSort.radixSort(alph);
